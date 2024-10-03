@@ -41,6 +41,13 @@ export const getFavoriteUsers = async () => {
 
 export const initSearchInputListener = () => {
   const usersList = document.querySelector('#usersList') as HTMLElement;
+  const searchBar = document.querySelector('#searchInput') as HTMLInputElement;
+
+  searchBar?.addEventListener('input', async (ev) => {
+    let target = ev.target as HTMLInputElement;
+    let value = target.value;
+    getUsers(value);
+  })
 
   /**
    * 💡 hint: implement an event listener for searchInput so when the
