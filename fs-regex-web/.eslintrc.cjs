@@ -10,4 +10,10 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint', 'cypress'],
   root: true,
+  rules: {
+    "semi": "warn",
+    "eqeqeq": "warn",
+    "no-unused-vars": "warn",
+    "prefer-const": "warn"
+  }
 }
