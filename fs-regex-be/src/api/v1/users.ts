@@ -13,15 +13,14 @@ router.get('/', async (req, res) => {
 
       const myRegexPattern = new RegExp(name); 
 
-      const matchingUsers = USERS_LIST.map((user) => {
+      const matchingUsers = USERS_LIST.filter((user) => {
         const fullName = (user.firstName + user.lastName).toLowerCase();
-        return myRegexPattern.test(fullName); 
+        if (myRegexPattern.test(fullName)) return user;
       });
-      console.log(matchingUsers)
 
-    return res.json({
-      users: matchingUsers
-    })
+      return res.json({
+        users: matchingUsers
+      });
   
     } else {
       res.json(USERS_LIST); 
