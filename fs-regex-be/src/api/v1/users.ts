@@ -22,28 +22,16 @@ router.get('/', async (req, res) => {
         users: matchingUsers
       });
   
-    } else {
-      res.json(USERS_LIST); 
-    }
+    } 
+   
+    res.json({
+      users: USERS_LIST
+    });     
   } catch (error) {
     res.status(500).json({ error: 'An error occurred' });
   }
 });
-      /**
-       * 💡 hint: use regex here and see the readme for what is required when searching
-       
-      return res.json({
-        users: USERS_LIST
-      })
-    }
-    res.json({
-      users: USERS_LIST
-    });
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch all users' });
-  }
-});*/
-
+ 
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
   try {
