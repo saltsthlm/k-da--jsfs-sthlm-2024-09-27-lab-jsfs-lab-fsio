@@ -6,7 +6,6 @@ const router = Router();
 
 const doesFolderExist = async (filePath : string) => {
   const folderPath = path.dirname(filePath);
-  console.log('DIR_NAME', folderPath)
   try {
       await fs.access(folderPath);
   } catch (error) {
@@ -37,8 +36,9 @@ router.post('/', async (req, res) => {
   const user = req.body.user as User;
 
   try {
-    const data = await fs.writeFile(favoritesFilePath, JSON.stringify(user), 'utf8');
-    console.log(data);
+    await doesFolderExist(favoritesFilePath)
+    await fs.appendFile(favoritesFilePath, "user");
+   
     /**
      * 💡 hint: 
      * you should probably get the favorited users from the file,
