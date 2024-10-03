@@ -55,6 +55,7 @@ describe('Favorites Router', () => {
       .post('/api/v1/favorite-users')
       .set({ 'Content-Type': 'application/json', 'Accept': 'application/json' })
       .send({ user: { id: '1', name: 'User1' } });
+    
 
     expect(response.status).toBe(200);
     expect(fs.writeFileSync).toHaveBeenCalledWith(

@@ -1,24 +1,30 @@
 import { Router } from 'express';
-import { promises as fs } from 'fs';
+//import { promises as fs } from 'fs';
+import fs from 'fs';
 import path from 'path';
 import { User } from '@ngneat/falso';
 const router = Router();
 
-const doesFolderExist = async (filePath : string) => {
+/* const doesFolderExist = async (filePath : string) => {
   const folderPath = path.dirname(filePath);
   try {
       await fs.access(folderPath);
   } catch (error) {
       await fs.mkdir(folderPath, { recursive: true });
   }
-}
+} */
 const favoritesFilePath = path.resolve(__dirname, '../../../db/favorites.json');
 
 router.get('/', async (req, res) => {
-  try {
-    doesFolderExist(favoritesFilePath)
+  try {   
     let favoritedUsers: User[] = [];
-    console.log(favoritesFilePath)
+
+    if (!fs.existsSync(favoritesFilePath)) return res.json({ users: favoritedUsers });
+
+    favoritedUsers = JSON.parse(fs.readFileSync(favoritesFilePath, 'utf8'));
+
+  
+
     // const data = await fs.readFile(favoritesFilePath, 'utf8');
     // console.log(data);
     // 💡 hint: you should probably get the favorited users from the file
@@ -36,20 +42,15 @@ router.post('/', async (req, res) => {
   const user = req.body.user as User;
 
   try {
-    await doesFolderExist(favoritesFilePath)
-    await fs.appendFile(favoritesFilePath, "user");
-   
-    /**
-     * 💡 hint: 
-     * you should probably get the favorited users from the file,
-     * add the favorited user to the list,
-     * write back to the file with the new user
-     */
+    //await doesFolderExist(favoritesFilePath);
+    //await fs.appendFile(favoritesFilePath, user);
+    fs.appendFileSync(favoritesFilePath, 'user');
+
     res.json({
-      user
+      user: 'user'
     });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to favorite user' });
+    res.status(500).json({ error: 'Failed to add favorite user' });
   }
 });
 
