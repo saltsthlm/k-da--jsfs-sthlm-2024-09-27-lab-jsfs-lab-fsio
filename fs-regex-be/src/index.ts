@@ -5,7 +5,7 @@ import usersRouter from './api/v1/users';
 import favoriteUsersRouter from './api/v1/favorite-users';
 import cors from 'cors';import bodyParser from 'body-parser';
 
-//For env File 
+// For env File 
 dotenv.config();
 
 const app: Application = express();
