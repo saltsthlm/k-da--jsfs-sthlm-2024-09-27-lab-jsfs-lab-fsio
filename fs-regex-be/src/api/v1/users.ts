@@ -10,6 +10,10 @@ router.get('/', async (req, res) => {
     let name = (req.query.name as string);
     if (name) {
       name = name.toLowerCase();
+
+      const fullNames = USERS_LIST.map((user) => {
+        return user.firstName + user.lastName;
+    })
       /**
        * 💡 hint: use regex here and see the readme for what is required when searching
        */
