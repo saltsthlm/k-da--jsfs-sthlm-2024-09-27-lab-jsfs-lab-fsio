@@ -8,6 +8,10 @@ const router = Router();
 router.get('/', async (req, res) => {
   try {
     let name = (req.query.name as string);
+    // let username = (req.query.username as string);
+    // let email = (req.query.email as string);
+    // let phone = (req.query.phone as string);
+        
     if (name) {
       name = name.toLowerCase();
 
@@ -20,8 +24,7 @@ router.get('/', async (req, res) => {
 
       return res.json({
         users: matchingUsers
-      });
-  
+      });  
     } 
    
     res.json({
