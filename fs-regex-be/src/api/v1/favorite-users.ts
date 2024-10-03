@@ -8,7 +8,7 @@ const router = Router();
 const favoritesFilePath = path.resolve(__dirname, '../../../db/favorites.json');
 
 router.get('/', async (req, res) => {
-  try {   
+  try {
     let favoritedUsers: User[] = [];
 
     if (!fs.existsSync(favoritesFilePath)) return res.json({ users: favoritedUsers });
@@ -39,13 +39,17 @@ router.post('/', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   try {
-    /**
-     * 💡 hint: 
-     * you should probably get the favorited users from the file,
-     * remove the favorited user from the list using the id,
-     * write back to the file with the rest of the favorited users
-     */
-    res.json({
+    const userID = req.params.id as string
+    const favoriteList = JSON.parse(fs.readFileSync(favoritesFilePath, "utf8")) as User[];
+    const myRegexPattern = new RegExp(userID);
+    const matchingUsers = favoriteList.filter((user) => {
+      if (!myRegexPattern.test(user.id)) {
+        return user;
+      }
+    });
+
+    fs.writeFileSync(favoritesFilePath, JSON.stringify(matchingUsers))
+        res.json({
       success: true
     });
   } catch (error) {
