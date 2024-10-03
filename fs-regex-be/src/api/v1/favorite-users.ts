@@ -5,14 +5,6 @@ import path from 'path';
 import { User } from '@ngneat/falso';
 const router = Router();
 
-/* const doesFolderExist = async (filePath : string) => {
-  const folderPath = path.dirname(filePath);
-  try {
-      await fs.access(folderPath);
-  } catch (error) {
-      await fs.mkdir(folderPath, { recursive: true });
-  }
-} */
 const favoritesFilePath = path.resolve(__dirname, '../../../db/favorites.json');
 
 router.get('/', async (req, res) => {
@@ -22,12 +14,6 @@ router.get('/', async (req, res) => {
     if (!fs.existsSync(favoritesFilePath)) return res.json({ users: favoritedUsers });
 
     favoritedUsers = JSON.parse(fs.readFileSync(favoritesFilePath, 'utf8'));
-
-  
-
-    // const data = await fs.readFile(favoritesFilePath, 'utf8');
-    // console.log(data);
-    // 💡 hint: you should probably get the favorited users from the file
 
     res.json({
       users: favoritedUsers
@@ -42,10 +28,7 @@ router.post('/', async (req, res) => {
   const user = req.body.user as User;
 
   try {
-    //await doesFolderExist(favoritesFilePath);
-    //await fs.appendFile(favoritesFilePath, user);
-    fs.appendFileSync(favoritesFilePath, 'user');
-
+    fs.writeFileSync(favoritesFilePath, JSON.stringify([user]));
     res.json({
       user: 'user'
     });
