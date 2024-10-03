@@ -11,12 +11,28 @@ router.get('/', async (req, res) => {
     if (name) {
       name = name.toLowerCase();
 
-      const fullNames = USERS_LIST.map((user) => {
-        return user.firstName + user.lastName;
+      const myRegexPattern = new RegExp(name); 
+
+      const matchingUsers = USERS_LIST.map((user) => {
+        const fullName = (user.firstName + user.lastName).toLowerCase();
+        return myRegexPattern.test(fullName); 
+      });
+      console.log(matchingUsers)
+
+    return res.json({
+      users: matchingUsers
     })
+  
+    } else {
+      res.json(USERS_LIST); 
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'An error occurred' });
+  }
+});
       /**
        * 💡 hint: use regex here and see the readme for what is required when searching
-       */
+       
       return res.json({
         users: USERS_LIST
       })
@@ -27,7 +43,7 @@ router.get('/', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch all users' });
   }
-});
+});*/
 
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
