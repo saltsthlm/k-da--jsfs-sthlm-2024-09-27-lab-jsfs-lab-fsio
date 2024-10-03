@@ -19,7 +19,6 @@ router.get('/', async (req, res) => {
       users: favoritedUsers
     });
   } catch (error) {
-    console.log(error)
     res.status(500).json({ error: 'Failed to fetch favorite users' });
   }
 });
@@ -30,7 +29,7 @@ router.post('/', async (req, res) => {
   try {
     fs.writeFileSync(favoritesFilePath, JSON.stringify([user]));
     res.json({
-      user: 'user'
+      user: user
     });
   } catch (error) {
     res.status(500).json({ error: 'Failed to add favorite user' });
@@ -39,7 +38,7 @@ router.post('/', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   try {
-    const userID = req.params.id as string
+    const userID = req.params.id as string;
     const favoriteList = JSON.parse(fs.readFileSync(favoritesFilePath, "utf8")) as User[];
     const myRegexPattern = new RegExp(userID);
     const matchingUsers = favoriteList.filter((user) => {
